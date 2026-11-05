@@ -1,0 +1,3 @@
+# @package _global_
+# Placeholder selection: no overrides. Selecting a sibling file composes its
+# hyperparameters over the base config at Hydra-composition time.

@@ -1,0 +1,10 @@
+type: mjx
+jax_native: true  # Steps inside the traced rollout.
+name: G1JoystickFlatTerrain
+max_episode_steps: 1000
+terminate: false
+push_distractions: false
+asymmetric_observation: true
+
+vmin: -10
+vmax:  10

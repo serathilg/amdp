@@ -1,0 +1,40 @@
+entry_point: src/jaxrl/amdp_ou_reppo.py
+base_override: -cn amdp_ou_reppo +run=062_ou_scaling_mjx/config
+job_name: reppo_sweep
+array: '0-39%0'
+time: '240'
+jobs_per_task: 5
+grid:
+  seed:
+  - '0'
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  hyperparameters.diffusion.ou_settings.loss_scaling_exp_factor_power:
+  - '0'
+  - '-1'
+  - '-2'
+list:
+  env.name:
+  - 'FishSwim'
+  - 'HopperHop'
+  - 'ReacherEasy'
+  - 'ReacherHard'
+  - 'PendulumSwingup'
+  - 'WalkerRun'
+  - 'BallInCup'
+  - 'FingerSpin'
+  - 'CartpoleBalance'
+  - 'CartpoleBalanceSparse'
+  - 'WalkerWalk'
+  - 'FingerTurnEasy'
+  - 'FingerTurnHard'
+  - 'CartpoleSwingup'
+  - 'CartpoleSwingupSparse'
+  - 'WalkerStand'
+  - 'HopperStand'
+  - 'CheetahRun'
+  - 'AcrobotSwingup'
+  - 'AcrobotSwingupSparse'
+ablations: []

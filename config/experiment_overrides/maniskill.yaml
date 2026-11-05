@@ -1,0 +1,4 @@
+# @package _global_
+hyperparameters:
+  gamma: 0.8
+  max_episode_steps: 50

@@ -1,0 +1,30 @@
+# Slurm profile for scripts/submit.py. Copy to config/slurm/<name>.yaml, adapt,
+# and submit with --cluster <name>. Keep the account out of profiles: pass
+# --account or export SBATCH_ACCOUNT.
+
+# Emitted as "#SBATCH --<key>=<value>" lines.
+sbatch_options:
+  partition: gpu
+  gres: gpu:1
+  cpus-per-task: 16
+  mem: 64000
+  # For run_mode: parallel, request one GPU per task instead of gres, e.g.
+  # nodes: 1
+  # ntasks: 4
+  # gpus-per-task: 1
+
+# sequential: the runs of an array task execute one after another.
+# parallel: up to max_parallel runs execute concurrently, one srun task each.
+run_mode: sequential
+max_parallel: 4
+
+# tmpdir: wandb files go to $TMPDIR (node-local).
+# outputs: wandb files go to outputs/<run>/ next to the slurm logs; for clusters
+#   whose compute nodes are offline (set wandb.mode=offline, then run
+#   `wandb sync` from a login node).
+wandb_dir: tmpdir
+
+# Exported in the generated script; ${REPO} expands to the repository root.
+env:
+  # e.g. when the system cuDNN is older than the one the jax wheels need:
+  # LD_LIBRARY_PATH: ${REPO}/.venv/lib/python3.12/site-packages/nvidia/cudnn/lib:$LD_LIBRARY_PATH

@@ -1,0 +1,39 @@
+entry_point: src/jaxrl/amdp_reppo.py
+base_override: -cn amdp_reppo +run=042_mjx_noTR/config
+job_name: reppo_sweep
+array: '0-49%0'
+time: '480'
+jobs_per_task: 4
+grid: {}
+list:
+  env.name:
+  - 'FishSwim'
+  - 'HopperHop'
+  - 'ReacherEasy'
+  - 'ReacherHard'
+  - 'PendulumSwingup'
+  - 'WalkerRun'
+  - 'BallInCup'
+  - 'FingerSpin'
+  - 'CartpoleBalance'
+  - 'CartpoleBalanceSparse'
+  - 'WalkerWalk'
+  - 'FingerTurnEasy'
+  - 'FingerTurnHard'
+  - 'CartpoleSwingup'
+  - 'CartpoleSwingupSparse'
+  - 'WalkerStand'
+  - 'HopperStand'
+  - 'CheetahRun'
+  - 'AcrobotSwingup'
+  - 'AcrobotSwingupSparse'
+ablations:
+- 'seed=1'
+- 'seed=2'
+- 'seed=3'
+- 'seed=4'
+- 'seed=5'
+- 'seed=6'
+- 'seed=7'
+- 'seed=8'
+- 'seed=9'

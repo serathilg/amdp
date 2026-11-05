@@ -1,0 +1,10 @@
+type: mjx
+jax_native: true  # Steps inside the traced rollout.
+name: 
+max_episode_steps: null
+terminate: false
+push_distractions: false
+asymmetric_observation: true
+
+vmin: 0
+vmax: 150

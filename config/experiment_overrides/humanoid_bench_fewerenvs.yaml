@@ -1,0 +1,6 @@
+# @package _global_
+hyperparameters:
+  num_envs: 16
+  num_steps: 1024
+  num_mini_batches: 8
+  num_epochs: 8

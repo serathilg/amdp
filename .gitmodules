@@ -1,0 +1,4 @@
+[submodule "dependencies/humanoid-bench"]
+	path = dependencies/humanoid-bench
+	url = https://github.com/serathilg/humanoid-bench.git
+	branch = update_mujoco

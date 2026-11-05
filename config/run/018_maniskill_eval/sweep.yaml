@@ -1,0 +1,48 @@
+entry_point: src/torchrl/amdp_reppo.py
+base_override: -cn amdp_reppo_torch +run=018_maniskill_eval/config
+job_name: reppo_sweep
+array: '0-33%0'
+time: '120'
+jobs_per_task: 3
+grid:
+  seed:
+  - '0'
+  hyperparameters.diffusion.noise_schedule.sigma_min: []
+list:
+  env.name:
+  - 'LiftPegUpright-v1'
+  - 'PickCube-v1'
+  - 'PlaceSphere-v1'
+  - 'PokeCube-v1'
+  - 'PullCube-v1'
+  - 'PullCubeTool-v1'
+  - 'PushT-v1'
+  - 'RollBall-v1'
+  - 'StackCube-v1'
+  - 'TwoRobotPickCube-v1'
+  - 'TwoRobotStackCube-v1'
+  - 'PushCube-v1'
+  - 'UnitreeG1PlaceAppleInBowl-v1'
+  - 'UnitreeG1TransportBox-v1'
+  - 'OpenCabinetDoor-v1'
+  - 'OpenCabinetDrawer-v1'
+  - 'PegInsertionSide-v1'
+  hyperparameters.max_episode_steps:
+  - '50'
+  - '50'
+  - '50'
+  - '50'
+  - '50'
+  - '100'
+  - '100'
+  - '80'
+  - '50'
+  - '100'
+  - '100'
+  - '50'
+  - '100'
+  - '100'
+  - '100'
+  - '100'
+  - '100'
+ablations: []

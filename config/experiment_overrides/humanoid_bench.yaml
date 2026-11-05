@@ -1,0 +1,6 @@
+# @package _global_
+hyperparameters:
+  num_envs: 128
+  num_subproc: 32
+  num_mini_batches: 8
+  num_epochs: 8

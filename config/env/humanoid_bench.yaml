@@ -1,0 +1,8 @@
+type: humanoid_bench
+jax_native: false  # Stepped by the host loop, outside the traced graph.
+name:
+max_episode_steps: null
+asymmetric_obs: false
+
+vmin: 0
+vmax: 500

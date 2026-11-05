@@ -1,0 +1,18 @@
+entry_point: src/jaxrl/amdp_reppo_benchmark.py
+base_override: -cn amdp_reppo +run=053_mjx_hum_bench/config
+job_name: reppo_sweep
+array: '0-7%0'
+time: '600'
+jobs_per_task: 4
+grid:
+  hyperparameters.diffusion.diff_steps:
+  - '16'
+  - '128'
+list:
+  env.name:
+  - 'G1JoystickRoughTerrain'
+  - 'T1JoystickFlatTerrain'
+ablations:
+- 'seed=1'
+- 'seed=2'
+- 'seed=3'

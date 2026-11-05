@@ -1,0 +1,32 @@
+type: mjx
+jax_native: true  # Steps inside the traced rollout.
+name: CartpoleSwingup
+#name: HopperHop
+max_episode_steps: 1000
+terminate: false
+asymmetric_observation: false
+asymmetric_obs: false
+
+vmin: 0
+vmax: 150
+
+#    "PendulumSwingup",
+#    "AcrobotSwingup",
+#    "AcrobotSwingupSparse",
+#    "BallInCup",
+#    "CartpoleBalance",
+#    "CartpoleBalanceSparse",
+#    "CartpoleSwingup",
+#    "CartpoleSwingupSparse",
+#    "CheetahRun",
+#    "FingerSpin",
+#    "FingerTurnEasy",
+#    "FingerTurnHard",
+#    "FishSwim",
+#    "HopperHop",
+#    "HopperStand",
+#    "ReacherEasy",
+#    "ReacherHard",
+#    "WalkerRun",
+#    "WalkerWalk",
+#    "WalkerStand"

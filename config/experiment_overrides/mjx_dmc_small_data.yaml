@@ -1,0 +1,5 @@
+# @package _global_
+hyperparameters:
+  num_steps: 32
+  num_mini_batches: 16
+  num_epochs: 8

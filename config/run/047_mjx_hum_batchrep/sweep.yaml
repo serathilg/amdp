@@ -1,0 +1,23 @@
+entry_point: src/jaxrl/amdp_reppo.py
+base_override: -cn amdp_reppo +run=047_mjx_hum_batchrep/config
+job_name: reppo_sweep
+array: '0-9%0'
+time: '360'
+jobs_per_task: 4
+grid: {}
+list:
+  env.name:
+  - 'G1JoystickFlatTerrain'
+  - 'G1JoystickRoughTerrain'
+  - 'T1JoystickFlatTerrain'
+  - 'T1JoystickRoughTerrain'
+ablations:
+- 'seed=1'
+- 'seed=2'
+- 'seed=3'
+- 'seed=4'
+- 'seed=5'
+- 'seed=6'
+- 'seed=7'
+- 'seed=8'
+- 'seed=9'

@@ -1,0 +1,6 @@
+# @package _global_
+hyperparameters:
+  gamma: 0.97
+  critic_hidden_dim: 1024
+  num_mini_batches: 16
+  num_epochs: 8

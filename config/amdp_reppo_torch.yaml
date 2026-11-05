@@ -1,0 +1,148 @@
+# _self_ composes first so the experiment_overrides group (a "@package _global_"
+# group) can override the hyperparameters below at Hydra-composition time.
+defaults:
+  - _self_
+  - env: mjx_dmc
+  - experiment_overrides: default
+
+# torch runtime settings (read only by src/torchrl/)
+platform:
+  amp_enabled: false
+  amp_device: "cuda"
+  cuda: true
+  amp_dtype: f32
+  torch_deterministic: false
+  device_rank: 0
+  compile: true
+
+hyperparameters:
+  # env and run settings (mostly don't touch)
+  total_time_steps: 52_428_800
+  normalize_env: true
+  max_episode_steps: 1000
+  num_eval: 400
+
+  # optimization settings (seem very stable)
+  lr: 3e-4
+  max_grad_norm: 0.5
+  polyak: 1.0 # maybe ablate ?
+
+  # problem discount settings (need tuning)
+  gamma: 0.99
+  lmbda: 0.95
+
+  # batch settings (need tuning for MJX humanoid)
+  # buffer_size  = num_steps * num_envs
+  # batch_size = num_steps * num_envs / num_minibatches
+  num_steps: 128
+  num_mini_batches: 128
+  num_envs: 1024
+  num_subproc: 1
+  num_epochs: 4
+
+  Q_score_max_norm: 5.
+  Q_score_max_percentile: 95.0
+  Q_score_max_norm_for_squashed: False
+
+  num_epochs_actor: 4
+  num_epochs_critic: 4
+
+  # critic architecture settings (need to be increased for MJX humanoid)
+  critic_hidden_dim: 512
+  vmin: ${env.vmin}
+  vmax: ${env.vmax}
+  num_bins: 151
+  hl_gauss: true
+  use_critic_norm: true
+  num_critic_encoder_layers: 2
+  num_critic_head_layers: 2
+  num_critic_pred_layers: 2
+  use_simplical_embedding: False
+  use_critic_skip: False
+
+  # actor & critic loss settings (seem remarkably stable)
+  ## kl settings
+  kl_start: 1.0 # initial value for learned lagrangian
+  kl_bound: 0.1 # switched to tighter bounds for MJX
+  ## entropy settings
+  ent_start: 0.01
+  ent_target_mult: 1.0
+  ## auxiliary loss settings
+  aux_loss_mult: 1.0
+
+  # logging settings (disable for faster training)
+  log_pnorm: true  # log parameter norms (disable to save computation)
+  log_gnorm: true  # log gradient norms (disable to save computation)
+
+  # Diffusion settings
+  diffusion:
+    diff_steps: 16
+
+
+    learn_forward: true
+    learn_backward: false
+
+    score_model:
+      num_layers: 3
+      num_hid: 512
+      num_time_hid: 32
+      num_time_out: 16
+      outer_clip: 1e4
+      inner_clip: 1e2
+      weight_init: 1e-8
+      bias_init: 0.
+      layer_norm: true
+      layer_norm_type: "LayerNorm"
+
+    noise_schedule:
+      _target_: src.networks.amdp.torch_scheduler.get_geometric_scheduler
+      sigma_max: 2.
+      sigma_min: 0.01
+
+    # get methods
+    sde_integrator: src.networks.amdp.torch_integrators.sde_integrator
+
+  # Best-of-N evaluation: for each N, draw N SDE samples per step and act with the
+  # argmax-Q sample. Each N logs metrics as eval/episode_return_bon_XXX.
+  best_of_n_values: []
+
+  use_staggered_resets: false
+  staggered_resets: "uniform_2"  # optional, defaults to "uniform_2"
+  num_stagger_blocks: null  # optional
+
+  # render/video parameters
+  render_interval: 0  # 0 means no rendering
+  render_fps: 30
+
+measure_burnin: 3
+
+name: "amdp_reppo_torch"
+seed: 0
+num_seeds: 1
+# Video recording parameters (outside hyperparameters for global access)
+render_dir: null  # Directory to save ManiSkill videos locally (e.g., "./videos/maniskill")
+checkpoint_dir: "./checkpoints"  # Directory to save checkpoints
+checkpoint_path: null  # Path to load checkpoint from (for resuming training)
+save_checkpoint_interval: 0  # Save a checkpoint every N evaluations (0 = no periodic saving)
+save_final_checkpoint: true  # Save checkpoint at the end of training
+wandb_upload_checkpoints: true  # Upload checkpoints to wandb as artifacts
+
+# Evaluation-only mode parameters
+eval_only: false  # Set to true to run evaluation only (requires checkpoint_path)
+eval_episodes: 10  # Number of episodes to run in eval-only mode
+
+save_trajectories: false  # Save end-effector trajectories during evaluation
+trajectory_dir: "./trajectories"  # Directory to save trajectory data and plots
+plot_trajectories: false  # Generate visualization plots (set to false to only save data)
+
+num_trials: 1
+tags: ["experimental"]
+wandb:
+  mode: "online" # set to online to activate wandb
+  entity: null # null: WANDB_ENTITY or your default wandb entity
+  project: "amdp_reppo_torch"
+  group: null
+
+hydra:
+  job:
+    chdir: True

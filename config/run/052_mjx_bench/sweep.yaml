@@ -1,0 +1,19 @@
+entry_point: src/jaxrl/amdp_reppo_benchmark.py
+base_override: -cn amdp_reppo +run=052_mjx_bench/config
+job_name: reppo_sweep
+array: '0-11%0'
+time: '300'
+jobs_per_task: 4
+grid:
+  hyperparameters.diffusion.diff_steps:
+  - '16'
+  - '128'
+list:
+  env.name:
+  - 'HopperHop'
+  - 'WalkerRun'
+  - 'CartpoleBalance'
+ablations:
+- 'seed=1'
+- 'seed=2'
+- 'seed=3'

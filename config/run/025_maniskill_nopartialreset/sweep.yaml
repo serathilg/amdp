@@ -1,0 +1,29 @@
+entry_point: src/torchrl/amdp_reppo.py
+base_override: -cn amdp_reppo_torch +run=025_maniskill_nopartialreset/config env.partial_reset=False
+job_name: reppo_sweep
+array: '0-29%0'
+time: '960'
+jobs_per_task: 1
+grid:
+  seed:
+  - '0'
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+list:
+  env.name:
+  - 'PickCube-v1'
+  - 'PokeCube-v1'
+  - 'PullCubeTool-v1'
+  - 'TwoRobotPickCube-v1'
+  - 'TwoRobotStackCube-v1'
+  - 'PushCube-v1'
+  hyperparameters.max_episode_steps:
+  - '50'
+  - '50'
+  - '100'
+  - '100'
+  - '100'
+  - '50'
+ablations: []

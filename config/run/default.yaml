@@ -1,0 +1,9 @@
+# @package _global_
+defaults:
+  - _self_
+
+idx: -1
+exp_name: ""
+
+wandb:
+  group: ${idx}_${exp_name}

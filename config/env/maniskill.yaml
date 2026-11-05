@@ -1,0 +1,19 @@
+type: maniskill
+jax_native: false  # Stepped by the host loop, outside the traced graph.
+name:
+reconfiguration_freq: 1
+partial_reset: true
+asymmetric_obs: false
+max_episode_steps: null
+has_final_obs: true
+
+env_kwargs:
+  obs_mode: state
+  sim_backend: physx_cuda
+  # Disables the SAPIEN render device and the per-env human-render cameras that are
+  # otherwise built regardless of render_mode -- training/eval never call render(),
+  # so this only frees VRAM. The torch trainer's dedicated render env overrides it.
+  render_backend: none
+
+vmin: -15
+vmax: 15

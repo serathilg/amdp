@@ -1,0 +1,24 @@
+entry_point: src/jaxrl/amdp_reppo.py
+base_override: -cn amdp_reppo +run=032_mjx_res_concat/config
+job_name: reppo_sweep
+array: '0-15%0'
+time: '480'
+jobs_per_task: 4
+grid:
+  hyperparameters.diffusion.score_model.res_stream_dim:
+  - '128'
+  - '256'
+list:
+  env.name:
+  - 'FishSwim'
+  - 'HopperHop'
+  - 'PendulumSwingup'
+  - 'BallInCup'
+  - 'FingerSpin'
+  - 'HopperStand'
+  - 'AcrobotSwingup'
+  - 'AcrobotSwingupSparse'
+ablations:
+- 'seed=1'
+- 'seed=2'
+- 'seed=3'

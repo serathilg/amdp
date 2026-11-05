@@ -1,0 +1,54 @@
+# @package _global_
+defaults:
+  - default # need to set +run=.../config.yaml for correct resolve
+  - override /env: mjx_humanoid
+  - _self_
+
+idx: 037
+exp_name: mjx_hum_dualdescent
+
+hydra:
+  run:
+    dir: outputs/037_mjx_hum_dualdescent/${now:%Y-%m-%d}/${now:%H-%M-%S}
+
+wandb:
+  mode: offline
+  project: amdp_reppo_dmc
+  group: 037_mjx_hum_dualdescent
+
+hyperparameters:
+  diffusion:
+    diff_steps: 32
+    noise_schedule:
+      sigma_max: 2.0
+      sigma_min: 0.01
+    score_model:
+      num_layers: 3
+      num_hid: 512
+      layer_norm: true
+  update_entropy_lagrangian: true
+  update_kl_lagrangian: true
+  ent_start: 0.01
+  kl_start: 1.0
+  ent_target_mult: 1.0
+  num_epochs_actor: 4
+  polyak: 1.0
+  use_target_critic_for_actor: False
+  aux_loss_mult: 1.0
+
+  Q_score_max_percentile: 80.0
+
+  batch_repetitions: 1
+  trust_region_lagrangian: dual_descent
+  trust_region_granularity: avg
+  trust_region_time_weighting: True
+  total_time_steps: 55_050_240
+  num_eval: 21
+  eval_first_episode_only: True
+  best_of_n_values: [16.0]
+
+  gamma: 0.97
+
+experiment_overrides:
+  hyperparameters:
+    lr: 3e-4
